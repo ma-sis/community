@@ -5,7 +5,7 @@
  
     <select id="getName" resultType="String">
 	    <![CDATA[
-	        select name from member where email='an@commu.com'
+	        select name from test
 	    ]]>
     </select>
     

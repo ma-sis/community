@@ -14,28 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 	
-
-	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
 	
 	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
 	public String index(Locale locale, Model model) {
 		return "index";
 	}
-	
-//	@Autowired
-//	private TestService service;
-//	
-//	@RequestMapping(value = "/test.do", method = RequestMethod.GET)
-//	public String mem(Model model) {
-//		String name="";
-//		name = service.getName();
-//
-//	        model.addAttribute("name", name);
-//	        System.out.println(name);
-//		return "test";
-//	}
 	
 	@Autowired
 	private TestService testService;
