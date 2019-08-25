@@ -23,6 +23,7 @@ public class HomeController {
 	
 	@Autowired
 	private TestService testService;
+	
 	@RequestMapping(value = "/test.do", method = RequestMethod.GET)
 	public String mem(Model model) {
 		
