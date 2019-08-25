@@ -1,7 +1,8 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
       <div class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
 
-        <a class="navbar-brand" href="index.jsp">
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/index.do">
           <img alt="Pipeline" src="${pageContext.request.contextPath}/resources/assets/img/logo.svg" />
         </a>
         <div class="d-flex align-items-center">
@@ -10,7 +11,7 @@
           </button>
           <div class="d-block d-lg-none ml-2">
             <div class="dropdown">
-              <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a href="${pageContext.request.contextPath}/index.me" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/avatar-male-4.jpg" class="avatar" />
               </a>
               <div class="dropdown-menu dropdown-menu-right">
@@ -32,12 +33,12 @@
 
             <li class="nav-item">
 
-              <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2">Pages</a>
+              <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2">게시판</a>
               <div id="submenu-2" class="collapse">
                 <ul class="nav nav-small flex-column">
 
                   <li class="nav-item">
-                    <a class="nav-link" href="#" >App Pages</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/board/messageboard/me" >자유게시판</a>
                   </li>
 
                   <li class="nav-item">
