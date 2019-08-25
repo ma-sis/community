@@ -83,10 +83,10 @@
             </div>
             
             <div class="chat-module-bottom">
-              <form class="chat-form" action="">
+              <form class="chat-form" action="${pageContext.request.contextPath}/board/messageboard/create">
               <div class="row">
-                <textarea class="form-control col-11" placeholder="새글을 입력해주세요." rows="1"></textarea>
-                <input type="hidden" name="" value="">
+                <textarea class="form-control col-11" placeholder="새글을 입력해주세요." rows="1" name="board_content"></textarea>
+                <input type="hidden" name="board_useremail" value="min@commu.com">
                 <input type="submit" class="col-1 btn btn-outline-primary" value="등록">
                 </div>
               </form>

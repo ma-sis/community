@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="org.masis.community.mybatis.messageboardmapper">
+    <insert id="create" >
+	    <![CDATA[
+	      insert into messageboard (board_useremail , board_regdate , board_content ) values(#{board_useremail},sysdate(),#{board_content})
+	    ]]>
+    </insert>
+    
+</mapper>
