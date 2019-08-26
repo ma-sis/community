@@ -14,11 +14,15 @@ public class MemberDAOImpl implements MemberDAO {
 	@Inject
 	private SqlSession sqlSession;
 	
-	private static final String Namespace = "org.masis.community.mybatis.MemberMapper";
+	private static final String Namespace = "org.masis.community.mybatis.MemberMapper.";
 	
 	@Override
 	public List<MemberDTO> selectMember() throws Exception {
-		return sqlSession.selectList(Namespace+".selectMember");
+		return sqlSession.selectList(Namespace+"selectMember");
 	}
-
+	
+	@Override
+	public MemberDTO selectlogin(MemberDTO mdto) throws Exception {
+		return sqlSession.selectOne(Namespace+"selectlogin", mdto);
+	}
 }

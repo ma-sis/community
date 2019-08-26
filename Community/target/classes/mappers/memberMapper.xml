@@ -8,5 +8,10 @@
 		select email, name from member
 	</select>
  
-    
+	<select id="selectlogin" resultType="memberDTO" parameterType="memberDTO">
+		<![CDATA[
+		select email, name, profile, admin from member
+		where email=#{email} and pwd=#{pwd}
+	    ]]>
+	</select>
 </mapper>
