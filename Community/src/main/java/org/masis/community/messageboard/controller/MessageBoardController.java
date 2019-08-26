@@ -19,18 +19,18 @@ public class MessageBoardController {
 	MessageBoardService messageboardService; 
 	
 	@RequestMapping(value = "me", method = RequestMethod.GET)
-	public String test(Model model) throws Exception{
-		
+	public String me(Model model) throws Exception{ //자유게시판으로 이동+전체게시물
+		model.addAttribute("messageboardList",messageboardService.listAll());
 		return "board/message_board/messageBoard";
 	}
 	
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String create(@ModelAttribute MessageBoardDTO dto,Model model) throws Exception{ //게시물작성
 	
-		
 		messageboardService.create(dto);
 		return "redirect:/board/messageboard/me";
 	}	
+	
 	
 
 }

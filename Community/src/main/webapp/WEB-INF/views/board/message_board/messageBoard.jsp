@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +16,15 @@
 <body>
 <div class="layout layout-nav-side">
 
-		<%-- Nav Start --%>
+<%-- Nav Start --%>
 			<jsp:include page="../../include/nav.jsp"></jsp:include>
-		<%-- Nav End --%>
+<%-- Nav End --%>
+
       <div class="main-container">
 
         <div class="content-container">
         
-<!--           왼쪽레이아웃 시작 -->        
+		<!-- Start:왼쪽레이아웃-->    
           <div class="chat-module" data-filter-list="chat-module-body">
             <div class="chat-module-top">
               <form>
@@ -35,51 +37,35 @@
                   <input type="search" class="form-control filter-list-input" placeholder="Search chat" aria-label="Search Chat">
                 </div>
               </form>
+              
+			<!--Start:게시물List -->
+			
               <div class="chat-module-body">
-
+				<!--Start:게시물-->
+				<c:forEach items="${messageboardList}" var="list">
                 <div class="media chat-item">
                   <img alt="Claire" src="${pageContext.request.contextPath}/resources/assets/img/avatar-female-1.jpg" class="avatar" />
                   <div class="media-body">
                     <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">Claire</span>
-                      <span data-filter-by="text">4 days ago</span>
+                      <span class="chat-item-author" data-filter-by="text">${list.board_useremail}</span>
+                      <span data-filter-by="text">${list.board_regdate}</span>
                     </div>
                     <div class="chat-item-body" data-filter-by="text">
-                      <p>Hey guys, just kicking things off here in the chat window. Hope you&#39;re all ready to tackle this great project. Let&#39;s smash some Brand Concept &amp; Design!</p>
-
+                      <p class="pb-0 mb-0">${list.board_content}</p>
                     </div>
-
-                  </div>
-                </div>
-
-                <div class="media chat-item">
-                  <img alt="Peggy" src="${pageContext.request.contextPath}/resources/assets/img/avatar-female-2.jpg" class="avatar" />
-                  <div class="media-body">
-                    <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">Peggy</span>
-                      <span data-filter-by="text">4 days ago</span>
-                    </div>
-                    <div class="chat-item-body" data-filter-by="text">
-                      <p>Nice one <a href="#">@Claire</a>, we&#39;ve got some killer ideas kicking about already.
-                        <img src="https://media.giphy.com/media/aTeHNLRLrwwwM/giphy.gif" alt="alt text" title="Thinking">
-                      </p>
+                     <div class="chat-item-title">
+                      <span class="chat-item-author" data-filter-by="text"></span>
+                      <span data-filter-by="text"> <i class="material-icons pt-1" style="font-size:15px;">favorite_border</i>
+                      ${list.board_like}
+                      </span>
                     </div>
                   </div>
                 </div>
-
-                <div class="media chat-item">
-                  <img alt="Ravi" src="${pageContext.request.contextPath}/resources/assets/img/avatar-male-3.jpg" class="avatar" />
-                  <div class="media-body">
-                    <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">Ravi</span>
-                      <span data-filter-by="text">3 days ago</span>
-                    </div>
-                    <div class="chat-item-body" data-filter-by="text">
-                      <h1>&#x1f609;</h1>
-                    </div>
-                  </div>
-                </div>
+                </c:forEach>
+                <!--End:게시물-->
+                
               </div>
+			<!--End:게시물List -->              
             </div>
             
             <div class="chat-module-bottom">
@@ -91,11 +77,10 @@
                 </div>
               </form>
             </div>
-            
           </div>
-<!--           왼쪽레이아웃 끝 -->
+		<!-- End:왼쪽레이아웃-->
 
-<!--           오른쪽레이아웃 시작 -->
+		<!--Start:오른쪽레이아웃 -->
           <div class="sidebar collapse" id="sidebar-collapse">
             <div class="sidebar-content">
               <div class="chat-team-sidebar text-small">
@@ -110,7 +95,8 @@
               </div>
             </div>
           </div>
-<!--           오른쪽레이아웃 끝 -->          
+		<!-- End:오른레이아웃-->      
+		  
         </div>
 
       </div>
