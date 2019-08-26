@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="org.masis.community.mybatis.messageboardmapper">
+   
+	<!--01.게시물 전체목록 select-->
+    <select id="listall" resultType="org.masis.community.messageboard.domain.MessageBoardDTO">
+     <![CDATA[
+     	select * from messageboard
+	    ]]>
+    </select>
+    
+	<!-- 02.게시물 insert-->
+    <insert id="create" >
+	    <![CDATA[
+	      insert into messageboard (board_useremail , board_regdate , board_content ) values(#{board_useremail},sysdate(),#{board_content})
+	    ]]>
+    </insert> 
+    
+   <!--03.게시물 상세읽기 select-->
+    <select id="read" resultType="org.masis.community.messageboard.domain.MessageBoardDTO">
+     <![CDATA[
+     	select * from messageboard where board_num = #{board_num}
+	    ]]>
+    </select>   
+    
+</mapper>
