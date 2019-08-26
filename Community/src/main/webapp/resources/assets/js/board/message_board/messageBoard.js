@@ -1,0 +1,8 @@
+/**
+ * 
+ */
+
+
+function fnRead(){
+	
+alert("dododo");}
