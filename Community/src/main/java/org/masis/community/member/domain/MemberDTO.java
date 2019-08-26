@@ -6,7 +6,9 @@ public class MemberDTO {
 	private String email,pwd,name,phone,profile;
 	private Timestamp reg_date;
 	private int admin;
-	
+	public String logInfo() {
+		return "[email=" + email + ", name=" + name + ", profile="+ profile + ", admin=" + admin + "]";
+	}
 	public String getEmail() {
 		return email;
 	}

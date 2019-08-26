@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
       <div class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
 
         <a class="navbar-brand" href="${pageContext.request.contextPath}/index.do">
@@ -9,6 +9,7 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
+          <c:if test="${sessionScope.mdto !=null}">
           <div class="d-block d-lg-none ml-2">
             <div class="dropdown">
               <a href="${pageContext.request.contextPath}/index.me" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -21,6 +22,7 @@
               </div>
             </div>
           </div>
+          </c:if>
         </div>
         <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
           <ul class="navbar-nav d-lg-block">
@@ -117,6 +119,11 @@
               </div>
             </form>
             <div class="dropdown mt-2">
+            <c:choose>
+            	<c:when test="${sessionScope.mdto == null}">
+            		<a href="${pageContext.request.contextPath}/member/login.me"><button class="btn btn-primary btn-block" id="login">LOGIN</button></a>
+            	</c:when>
+            	<c:otherwise>
               <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="newContentButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Add New
               </button>
@@ -125,20 +132,23 @@
                 <a class="dropdown-item" href="#">Project</a>
                 <a class="dropdown-item" href="#">Task</a>
               </div>
+            	</c:otherwise>
+            </c:choose>
             </div>
           </div>
         </div>
+       	<c:if test="${sessionScope.mdto != null}">
         <div class="d-none d-lg-block">
           <div class="dropup">
-            <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/avatar-male-4.jpg" class="avatar" />
-            </a>
-            <div class="dropdown-menu">
-              <a href="#"  class="dropdown-item">Profile</a>
-              <a href="#"  class="dropdown-item">Account Settings</a>
-              <a href="#" class="dropdown-item">Log Out</a>
-            </div>
+	            <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/avatar-male-4.jpg" class="avatar" />
+	            </a>
+	            <div class="dropdown-menu">
+	              <a href="#"  class="dropdown-item">Profile</a>
+	              <a href="#"  class="dropdown-item">Account Settings</a>
+	              <a href="#" class="dropdown-item">Log Out</a>
+	            </div>
           </div>
         </div>
-
+       	</c:if>
       </div>
