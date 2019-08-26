@@ -23,65 +23,29 @@
 
 
       <div class="main-container">
-
         <div class="content-container row">
-		<!-- Start:왼쪽레이아웃-->   
-	
-          <div class="chat-module col-9" data-filter-list="chat-module-body">
-            <div class="chat-module-top">
-              <form>
-                <div class="input-group input-group-round">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">search</i>
-                    </span>
-                  </div>
-                  <input type="search" class="form-control filter-list-input" placeholder="Search chat" aria-label="Search Chat">
-                </div>
-              </form>
-              
-			<!--Start:게시물List -->
-			
-              <div class="chat-module-body">
-				<!--Start:게시물-->
-				<c:forEach items="${messageboardList}" var="list">
+        
+	<!-- Start:왼쪽레이아웃-->   
+      <div class="col-9 border">
+		<div class="border pl-2 pt-2">
+		<h4 class="text-muted"><b>자유게시판</b></h4>
+		</div>
+		<div class="border">
                 <div class="media chat-item" >
                   <img alt="Claire" src="${pageContext.request.contextPath}/resources/assets/img/avatar-female-1.jpg" class="avatar" />
-                  <div class="media-body">
+                  <div class="media-body bg-light pt-0">
                     <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">${list.board_useremail}</span>
-                      <span data-filter-by="text">${list.board_regdate}</span>
+                      <span class="chat-item-author" data-filter-by="text">${messageboardone.board_useremail}</span>
+                      <span data-filter-by="text">${messageboardone.board_regdate}</span>
                     </div>
                     <div class="chat-item-body" data-filter-by="text">
-                      <a class="pb-0 mb-0" href="${pageContext.request.contextPath}/board/messageboard/read/${list.board_num}">${list.board_content}</a>
-                    </div>
-                     <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text"></span>
-                      <span data-filter-by="text " class="text-muted">
-                    	<b class="text-primary"><i class="material-icons" style="font-size:15px;">favorite_border</i></b>${list.board_like}
-                    	<i class="material-icons" style="font-size:15px;">bookmark_border</i>
-                      </span>
+                     ${messageboardone.board_content}                  
                     </div>
                   </div>
-                </div>
-                </c:forEach>
-                <!--End:게시물-->
-                
-              </div>
-			<!--End:게시물List -->              
-            </div>
-            
-            <div class="chat-module-bottom">
-              <form class="chat-form" action="${pageContext.request.contextPath}/board/messageboard/create">
-              <div class="row">
-                <textarea class="form-control col-11" placeholder="새글을 입력해주세요." rows="1" name="board_content"></textarea>
-                <input type="hidden" name="board_useremail" value="min@commu.com">
-                <input type="submit" class="col-1 btn btn-outline-primary" value="등록">
-                </div>
-              </form>
-            </div>
-          </div>
-		<!-- End:왼쪽레이아웃-->
+                </div>			
+		</div>
+ 		</div>
+	<!-- End:왼쪽레이아웃-->
 
 		<!--Start:오른쪽레이아웃 -->
           <div class="sidebar collapse col-3" id="sidebar-collapse">
@@ -98,10 +62,9 @@
               </div>
             </div>
           </div>
-		<!-- End:오른레이아웃-->      
-		  
+		<!-- End:오른레이아웃-->     
+		 
         </div>
-
       </div>
     </div>
           <!-- Required vendor scripts (Do not remove) -->
@@ -127,9 +90,6 @@
 
     <!-- Required theme scripts (Do not remove) -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/js/theme.js"></script>
-    
-	<!--  messageBoard js -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/js/board/message_board/messageBoard.js"></script>
     
 </body>
 </html>

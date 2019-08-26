@@ -29,5 +29,11 @@ public class MessageBoardImpl implements MessageBoardDAO {
 		sqlsession.insert(Namespace+"create",dto);
 		
 	}
+	
+	@Override
+	public MessageBoardDTO read(int board_num) { //03.게시물 상세읽기
+		
+		return sqlsession.selectOne(Namespace+"read",board_num);
+	}
 
 }

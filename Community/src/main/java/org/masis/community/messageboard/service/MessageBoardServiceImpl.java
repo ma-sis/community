@@ -22,8 +22,20 @@ public class MessageBoardServiceImpl implements MessageBoardService {
 	
 	@Override
 	public void create(MessageBoardDTO dto) {//02.게시물작성
+		
+		//줄바꿈 문자처리
+		String content=dto.getBoard_content();
+		dto.setBoard_content(content.replace("\n","<br>"));
 		dao.create(dto);
 		
+	}
+	
+	@Override
+	public MessageBoardDTO read(String path) { //03.게시물 상세읽기
+		
+		path=path.split("/")[5]; //요청주소에서 게시판번호만 가져오기
+		
+		return dao.read(Integer.parseInt(path));
 	}
 
 }

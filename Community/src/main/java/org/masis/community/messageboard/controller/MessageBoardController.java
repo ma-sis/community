@@ -2,6 +2,7 @@ package org.masis.community.messageboard.controller;
 
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.masis.community.messageboard.domain.MessageBoardDTO;
 import org.masis.community.messageboard.service.MessageBoardService;
@@ -30,6 +31,16 @@ public class MessageBoardController {
 		messageboardService.create(dto);
 		return "redirect:/board/messageboard/me";
 	}	
+
+	@RequestMapping(value = "read/*", method = RequestMethod.GET)
+	public String read(String board_num,Model model,HttpServletRequest request) throws Exception{//게시물 상세보기
+//		messageboardService.read(request.getRequestURI()); //요청주소 
+		model.addAttribute("messageboardone",messageboardService.read(request.getRequestURI()));
+		
+		return "board/message_board/messageBoardOne";
+	}
+	
+
 	
 	
 

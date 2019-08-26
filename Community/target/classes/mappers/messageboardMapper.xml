@@ -14,6 +14,13 @@
 	    <![CDATA[
 	      insert into messageboard (board_useremail , board_regdate , board_content ) values(#{board_useremail},sysdate(),#{board_content})
 	    ]]>
-    </insert>    
+    </insert> 
+    
+   <!--03.게시물 상세읽기 select-->
+    <select id="read" resultType="org.masis.community.messageboard.domain.MessageBoardDTO">
+     <![CDATA[
+     	select * from messageboard where board_num = #{board_num}
+	    ]]>
+    </select>   
     
 </mapper>
