@@ -40,7 +40,7 @@
                 <ul class="nav nav-small flex-column">
 
                   <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/board/messageboard/me" >자유게시판</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/board/messageboard/messageboard.me" >자유게시판</a>
                   </li>
 
                   <li class="nav-item">
