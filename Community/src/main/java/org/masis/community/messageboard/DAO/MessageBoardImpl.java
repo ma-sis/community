@@ -1,5 +1,7 @@
 package org.masis.community.messageboard.DAO;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,13 +11,22 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MessageBoardImpl implements MessageBoardDAO {
 	
+	 private static final String Namespace = "org.masis.community.mybatis.messageboardmapper.";
+	
 	@Inject
 	SqlSession sqlsession;
 	
 	@Override
-	public void create(MessageBoardDTO dto) { //게시물 insert
+	public List<MessageBoardDTO> listAll() { //01.게시물 전체목록 select
 		
-		sqlsession.insert("org.masis.community.mybatis.messageboardmapper.create",dto);
+	List<MessageBoardDTO> list=sqlsession.selectList(Namespace+"listall");
+		return list;
+	}
+	
+	@Override
+	public void create(MessageBoardDTO dto) { //02.게시물 insert
+		
+		sqlsession.insert(Namespace+"create",dto);
 		
 	}
 
