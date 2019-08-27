@@ -13,12 +13,12 @@
           <div class="d-block d-lg-none ml-2">
             <div class="dropdown">
               <a href="${pageContext.request.contextPath}/index.me" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/avatar-male-4.jpg" class="avatar" />
+                <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/profile/${mdto.profile}" class="avatar" />
               </a>
               <div class="dropdown-menu dropdown-menu-right">
                 <a href="nav-side-user.jsp" class="dropdown-item">Profile</a>
                 <a href="utility-account-settings.jsp" class="dropdown-item">Account Settings</a>
-                <a href="#" class="dropdown-item">Log Out</a>
+                <a href="${pageContext.request.contextPath}/member/logout.do" class="dropdown-item">Log Out</a>
               </div>
             </div>
           </div>
@@ -141,12 +141,12 @@
         <div class="d-none d-lg-block">
           <div class="dropup">
 	            <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	              <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/avatar-male-4.jpg" class="avatar" />
+	              <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/profile/${mdto.profile}" class="avatar" />
 	            </a>
 	            <div class="dropdown-menu">
 	              <a href="#"  class="dropdown-item">Profile</a>
 	              <a href="#"  class="dropdown-item">Account Settings</a>
-	              <a href="#" class="dropdown-item">Log Out</a>
+	              <a href="${pageContext.request.contextPath}/member/logout.do" class="dropdown-item">Log Out</a>
 	            </div>
           </div>
         </div>
