@@ -23,10 +23,10 @@
               <p class="lead">Log in to your account to continue</p>
               <form method="post" action="${context}/member/login.do">
                 <div class="form-group">
-                  <input class="form-control" type="email" placeholder="Email Address" name="email"/>
+                  <input class="form-control" type="email" placeholder="Email Address" name="email" required="required"/>
                 </div>
                 <div class="form-group">
-                  <input class="form-control" type="password" placeholder="Password" name="pwd"/>
+                  <input class="form-control" type="password" placeholder="Password" name="pwd" required="required"/>
                   <div class="text-right">
                     <small><a href="#">Forgot password?</a>
                     </small>
@@ -37,6 +37,7 @@
                 </button>
                 <small>Don't have an account yet? <a href="#">Create one</a>
                 </small>
+                <input type="hidden" name="ref" id="ref">
               </form>
             </div>
           </div>
@@ -69,8 +70,30 @@
     <script type="text/javascript" src="${context}/resources/assets/js/theme.js"></script>
 	
 	<script type="text/javascript">
-		var referer = "community/index.do"
-		alert(document.referrer);
+		$("form").on("submit", function() {
+// 			alert(document.referrer);
+			var referer = "${param.ref}";
+			
+			//처음 로그인 인 경우
+			if(referer==""){
+				//주소쳐서 오지않고 다른홈페이지에서 오지 않은 경우
+				if(document.referrer && document.referrer.indexOf("/community/") != -1){
+					var ref = document.referrer.split("/community");
+					referer = ref[ref.length-1];
+				}else{
+					referer = "/index.do";
+				}
+			}
+			
+			$("#ref").val(referer);
+			
+			alert($("#ref").val());
+		});
 	</script>
+<c:if test="${param.login}">
+	<script type="text/javascript">
+		alert("아이디 혹은 비밀번호가 맞지 않습니다. 다시한번 입력해 주세요!");
+	</script>
+</c:if>
   </body>
 </html>

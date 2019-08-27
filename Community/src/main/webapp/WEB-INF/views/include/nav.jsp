@@ -18,7 +18,7 @@
               <div class="dropdown-menu dropdown-menu-right">
                 <a href="nav-side-user.jsp" class="dropdown-item">Profile</a>
                 <a href="utility-account-settings.jsp" class="dropdown-item">Account Settings</a>
-                <a href="#" class="dropdown-item">Log Out</a>
+                <a href="${pageContext.request.contextPath}/member/logout.do" class="dropdown-item">Log Out</a>
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@
 	            <div class="dropdown-menu">
 	              <a href="#"  class="dropdown-item">Profile</a>
 	              <a href="#"  class="dropdown-item">Account Settings</a>
-	              <a href="#" class="dropdown-item">Log Out</a>
+	              <a href="${pageContext.request.contextPath}/member/logout.do" class="dropdown-item">Log Out</a>
 	            </div>
           </div>
         </div>
