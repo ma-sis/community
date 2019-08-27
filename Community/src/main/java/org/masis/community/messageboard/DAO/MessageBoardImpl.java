@@ -5,11 +5,16 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.masis.community.member.controller.MemberController;
 import org.masis.community.messageboard.domain.MessageBoardDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MessageBoardImpl implements MessageBoardDAO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	 private static final String Namespace = "org.masis.community.mybatis.messageboardmapper.";
 	
@@ -32,8 +37,9 @@ public class MessageBoardImpl implements MessageBoardDAO {
 	
 	@Override
 	public MessageBoardDTO read(int board_num) { //03.게시물 상세읽기
-		
-		return sqlsession.selectOne(Namespace+"read",board_num);
+		MessageBoardDTO dto = new MessageBoardDTO();
+		dto=sqlsession.selectOne(Namespace+"read",board_num);
+		return dto;
 	}
 
 }

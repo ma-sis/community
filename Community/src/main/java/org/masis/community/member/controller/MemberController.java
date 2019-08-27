@@ -44,7 +44,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String doLogin(Model model,@RequestParam String ref ,@ModelAttribute MemberDTO mdto, HttpSession session) throws Exception{
+	public String doLogin(@RequestParam String ref ,@ModelAttribute MemberDTO mdto, HttpSession session) throws Exception{
 		logger.info("Login Check");
 		
 		MemberDTO result = service.selectlogin(mdto);
@@ -62,5 +62,11 @@ public class MemberController {
 //		String path = req.getSession().getServletContext().getRealPath("/resources/assets/img/profile/");
 //		logger.info("path: "+path);
 		
+	}
+	
+	@RequestMapping(value = "/logout.do")
+	public String doLogout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/index.do";
 	}
 }

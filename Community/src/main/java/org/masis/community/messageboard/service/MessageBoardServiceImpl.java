@@ -1,15 +1,24 @@
 package org.masis.community.messageboard.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.masis.community.member.controller.MemberController;
 import org.masis.community.messageboard.DAO.MessageBoardDAO;
 import org.masis.community.messageboard.domain.MessageBoardDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class MessageBoardServiceImpl implements MessageBoardService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Inject
 	MessageBoardDAO dao;
