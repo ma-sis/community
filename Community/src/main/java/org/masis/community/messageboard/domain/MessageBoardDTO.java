@@ -1,13 +1,13 @@
 package org.masis.community.messageboard.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class MessageBoardDTO {
 	
 	private int board_num; //게시물번호
 	private String board_useremail; //게시물 작성자 이메일
 	private int board_like; //게시물 좋아요수 
-	private Date board_regdate; //게시물 등록일
+	private Date board_regdate; //게시물 등록일 ->시간가져와서 몇분전 글 기능구현 위해서 Timestamp로 바꿈 
 	private String board_content;//게시물 내용
 	
 	public int getBoard_num() {
@@ -28,14 +28,15 @@ public class MessageBoardDTO {
 	public void setBoard_like(int board_like) {
 		this.board_like = board_like;
 	}
+	
+	public String getBoard_content() {
+		return board_content;
+	}
 	public Date getBoard_regdate() {
 		return board_regdate;
 	}
 	public void setBoard_regdate(Date board_regdate) {
 		this.board_regdate = board_regdate;
-	}
-	public String getBoard_content() {
-		return board_content;
 	}
 	public void setBoard_content(String board_content) {
 		this.board_content = board_content;

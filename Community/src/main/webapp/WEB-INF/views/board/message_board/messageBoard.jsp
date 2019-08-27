@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="now" class="java.util.Date" />
+<fmt:formatDate value="${now}" pattern="yyyyMMddHHmm" var="nowDate" />    
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,12 +50,17 @@
               <div class="chat-module-body">
 				<!--Start:게시물-->
 				<c:forEach items="${messageboardList}" var="list">
+				<fmt:formatDate value="${list.board_regdate}" pattern="yyyyMMddHHmm" var="dd"/> 
+
+				
                 <div class="media chat-item" >
                   <img alt="Claire" src="${pageContext.request.contextPath}/resources/assets/img/avatar-female-1.jpg" class="avatar" />
                   <div class="media-body">
                     <div class="chat-item-title">
                       <span class="chat-item-author" data-filter-by="text">${list.board_useremail}</span>
-                      <span data-filter-by="text">${list.board_regdate}</span>
+                     
+                      <span data-filter-by="text">${nowDate} ${dd} ${nowDate - dd}</span>
+                    
                     </div>
                     <div class="chat-item-body" data-filter-by="text">
                       <a class="pb-0 mb-0" href="${pageContext.request.contextPath}/board/messageboard/read/${list.board_num}">${list.board_content}</a>
