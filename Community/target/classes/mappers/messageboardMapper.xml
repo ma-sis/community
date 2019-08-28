@@ -5,14 +5,14 @@
 	<!--01.게시물 전체목록 select-->
     <select id="listall" resultType="org.masis.community.messageboard.domain.MessageBoardDTO">
      <![CDATA[
-     	select * from messageboard
+     	select * from messageboard  order by board_num desc
 	    ]]>
     </select>
     
 	<!-- 02.게시물 insert-->
     <insert id="create" >
 	    <![CDATA[
-	      insert into messageboard (board_useremail , board_regdate , board_content ) values(#{board_useremail},sysdate(),#{board_content})
+	      insert into messageboard (board_useremail , board_regdate , board_content,board_username ) values(#{board_useremail},sysdate(),#{board_content},#{board_username})
 	    ]]>
     </insert> 
     

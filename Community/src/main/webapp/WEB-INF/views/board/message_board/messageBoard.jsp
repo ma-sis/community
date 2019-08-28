@@ -3,7 +3,9 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:useBean id="now" class="java.util.Date" />
-<fmt:formatDate value="${now}" pattern="yyyyMMddHHmm" var="nowDate" />    
+<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="nowDate1" />    
+<fmt:formatDate value="${now}" pattern="HH" var="nowDate2" />    
+<fmt:formatDate value="${now}" pattern="mm" var="nowDate3" />    
 
 
 <!DOCTYPE html>
@@ -35,7 +37,7 @@
           <div class="chat-module col-9" data-filter-list="chat-module-body">
             <div class="chat-module-top">
               <form>
-                <div class="input-group input-group-round">
+                <div class="input-group input-group-round" id="second">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="material-icons">search</i>
@@ -46,24 +48,48 @@
               </form>
               
 			<!--Start:게시물List -->
-			
-              <div class="chat-module-body">
+		
+              <div class="chat-module-body" id="third">
+              <div id="top"></div>
 				<!--Start:게시물-->
 				<c:forEach items="${messageboardList}" var="list">
-				<fmt:formatDate value="${list.board_regdate}" pattern="yyyyMMddHHmm" var="dd"/> 
-
+				<fmt:formatDate value="${list.board_regdate}" pattern="yyyyMMdd" var="regdate1"/> 
+				<fmt:formatDate value="${list.board_regdate}" pattern="MM/dd HH:mm" var="regdate4"/> 
+				<fmt:formatDate value="${list.board_regdate}" pattern="HH" var="regdate2"/> 
+				<fmt:formatDate value="${list.board_regdate}" pattern="mm" var="regdate3"/> 
 				
                 <div class="media chat-item" >
-                  <img alt="Claire" src="${pageContext.request.contextPath}/resources/assets/img/avatar-female-1.jpg" class="avatar" />
+                  <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/profile/default.jpg" class="avatar" />
                   <div class="media-body">
                     <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">${list.board_useremail}</span>
+                      <span class="chat-item-author" data-filter-by="text">${list.board_username}</span>
                      
-                      <span data-filter-by="text">${nowDate} ${dd} ${nowDate - dd}</span>
+                      <span data-filter-by="text">
+                      <c:choose>
+                      <c:when test="${nowDate1==regdate1}">
+                      <c:set var="result" value="${(nowDate2 * 60 + nowDate3) - (regdate2 * 60 + regdate3)}" ></c:set>
+                    
+                      <c:choose>
+							<c:when test="${result <60 and  result != 0}">
+							${result}분 전
+							</c:when>
+							<c:when test="${result == 0}">
+							방금 전
+							</c:when>							
+							<c:otherwise>
+							${regdate4}
+							</c:otherwise>
+                      </c:choose>	                      
+                      </c:when>
+                      <c:otherwise>
+                      ${regdate4}
+                      </c:otherwise>
+                      </c:choose>
+					</span>
                     
                     </div>
                     <div class="chat-item-body" data-filter-by="text">
-                      <a class="pb-0 mb-0" href="${pageContext.request.contextPath}/board/messageboard/read/${list.board_num}">${list.board_content}</a>
+                      <a class="pb-0 mb-0 text-secondary" href="${pageContext.request.contextPath}/board/messageboard/read/${list.board_num}">${list.board_content}</a>
                     </div>
                      <div class="chat-item-title">
                       <span class="chat-item-author" data-filter-by="text"></span>
@@ -80,7 +106,6 @@
               </div>
 			<!--End:게시물List -->              
             </div>
-            
             <div class="chat-module-bottom">
               <form class="chat-form" action="${pageContext.request.contextPath}/board/messageboard/create">
               <div class="row">
@@ -109,7 +134,7 @@
             </div>
           </div>
 		<!-- End:오른레이아웃-->      
-		  
+		
         </div>
 
       </div>
@@ -137,7 +162,6 @@
 
     <!-- Required theme scripts (Do not remove) -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/js/theme.js"></script>
-    
 	<!--  messageBoard js -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/js/board/message_board/messageBoard.js"></script>
     
