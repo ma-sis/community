@@ -69,4 +69,9 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/index.do";
 	}
+	
+	@RequestMapping(value = "/signUp.me")
+	public String moveToCreateAccount() {
+		return "member/create_account";
+	}
 }
