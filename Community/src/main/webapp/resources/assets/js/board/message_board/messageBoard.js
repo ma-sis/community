@@ -2,7 +2,6 @@
  * 
  */
 
-
-function fnRead(){
-	
-alert("dododo");}
+$(function(){
+	location.href="#top";
+})

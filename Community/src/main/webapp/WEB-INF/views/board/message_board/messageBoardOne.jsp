@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+  <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,17 +27,18 @@
         <div class="content-container row">
         
 	<!-- Start:왼쪽레이아웃-->   
-      <div class="col-9 border">
-		<div class="border pl-2 pt-2">
+      <div class="col-9 border pr-0">
+		<div class="border pl-2 pt-2  mb-1">
 		<h4 class="text-muted"><b>자유게시판</b></h4>
 		</div>
 		<div class="border">
                 <div class="media chat-item" >
-                  <img alt="Claire" src="${pageContext.request.contextPath}/resources/assets/img/avatar-female-1.jpg" class="avatar" />
+                  <img alt="Claire" src="${pageContext.request.contextPath}/resources/assets/img/profile/default.jpg" class="avatar" />
                   <div class="media-body bg-light pt-0">
                     <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">${messageboardone.board_useremail}</span>
-                      <span data-filter-by="text">${messageboardone.board_regdate}</span>
+                      <span class="chat-item-author" data-filter-by="text">${messageboardone.board_username}</span>
+                      	<fmt:formatDate value="${messageboardone.board_regdate}" pattern="MM/dd HH:mm" var="regdate4"/> 
+                      <span data-filter-by="text">${regdate4}</span>
                     </div>
                     <div class="chat-item-body" data-filter-by="text">
                      ${messageboardone.board_content}                  
