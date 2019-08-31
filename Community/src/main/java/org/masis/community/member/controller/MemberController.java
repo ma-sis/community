@@ -15,17 +15,18 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "/member")
-public class MemberController {
+public class MemberController {//회원 관련 처리 컨트롤러
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	@Inject
 	private MemberService service;
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String test(Model model) throws Exception{
+	public String test(Model model) throws Exception{//mysql, mybatis 연결테스트
 		logger.info("test");
 		
 		List<MemberDTO> list = service.selectMember();
@@ -37,6 +38,9 @@ public class MemberController {
 	
 	@RequestMapping(value = "/login.me")
 	public String moveToLogin( @RequestParam(required = false) boolean login, @RequestParam(required = false) String ref) throws Exception{
+	//로그인 페이지로 이동
+	//로그인 실패로 로그인 페이지로 재이동 되는 경우는 login 변수가 true
+	//ref는 로그인 페이지에 재 접속시 그 전 페이지 주소를 저장하고 있음
 		logger.info("Login Page");
 		logger.info("login again?: "+login);
 		logger.info("Previous Page: "+ref);
@@ -45,13 +49,18 @@ public class MemberController {
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String doLogin(@RequestParam String ref ,@ModelAttribute MemberDTO mdto, HttpSession session) throws Exception{
+		//로그인 시도 시 메일 비밀번호를 DB와 비교
+		//ref는 로그인 페이지에 접속하기 전 페이지를 저장하고 로그인 완료되면 그 페이지로 보내줌
 		logger.info("Login Check");
 		
 		MemberDTO result = service.selectlogin(mdto);
 		
+		//메일과 비밀번호가 맞지 않을 때
 		if(result == null) {
 			logger.info("Account NOT Exist...");
 			return "redirect:login.me?login=true&ref="+ref;
+			
+		//로그인 완료.. 세션영역에 memberDTO객체를 mdto로 저장하고 이전 페이지로 보내줌
 		}else {
 			logger.info("접속자 정보: "+result.logInfo());
 			session.setAttribute("mdto", result);
@@ -65,13 +74,28 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/logout.do")
-	public String doLogout(HttpSession session) {
+	public String doLogout(HttpSession session) {//로그아웃
+		logger.info("LOG OUT");
+		logger.info("BYE");
 		session.invalidate();
 		return "redirect:/index.do";
 	}
 	
 	@RequestMapping(value = "/signUp.me")
-	public String moveToCreateAccount() {
+	public String moveToCreateAccount() {//회원가입 페이지로 이동
+		logger.info("Move to create account");
 		return "member/create_account";
+	}
+	
+	@RequestMapping(value = "/emailCheck.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String sighUpEmailCheck(@RequestParam String email) throws Exception{
+	//회원가입 시 이메일 중복인지 확인 후 중복 아니면 메일 보내고 인증번호 리턴
+		logger.info("E-mail Check");
+		int cnt = service.countEmail(email);
+		if(cnt==0) {
+			
+			return "";
+		}else return "0";
 	}
 }

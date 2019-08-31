@@ -25,4 +25,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO selectlogin(MemberDTO mdto) throws Exception {
 		return sqlSession.selectOne(Namespace+"selectlogin", mdto);
 	}
+	
+	@Override
+	public int countEmail(String email) throws Exception {
+		return sqlSession.selectOne(Namespace+"countEmail",email);
+	}
 }
