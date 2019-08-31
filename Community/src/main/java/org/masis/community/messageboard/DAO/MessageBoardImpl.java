@@ -1,11 +1,8 @@
 package org.masis.community.messageboard.DAO;
 
 import java.util.List;
-
 import javax.inject.Inject;
-
 import org.apache.ibatis.session.SqlSession;
-import org.masis.community.member.controller.MemberController;
 import org.masis.community.messageboard.domain.MessageBoardDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MessageBoardImpl implements MessageBoardDAO {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	 private static final Logger logger = LoggerFactory.getLogger(MessageBoardImpl.class); 
 	
 	 private static final String Namespace = "org.masis.community.mybatis.messageboardmapper.";
 	

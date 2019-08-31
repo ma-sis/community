@@ -30,11 +30,13 @@ public class MessageBoardServiceImpl implements MessageBoardService {
 	}
 	
 	@Override
-	public void create(MessageBoardDTO dto) {//02.게시물작성
+	public void create(MessageBoardDTO dto ,String board_useremail,String board_username) {//02.게시물작성
 		
 		//줄바꿈 문자처리
 		String content=dto.getBoard_content();
 		dto.setBoard_content(content.replace("\n","<br>"));
+		dto.setBoard_useremail(board_useremail);
+		dto.setBoard_username(board_username);
 		dao.create(dto);
 		
 	}
