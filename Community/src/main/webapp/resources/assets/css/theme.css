@@ -7431,7 +7431,7 @@ h3 + .btn-round, h5 + .btn-round {
     display: flex;
     flex-direction: column;
     flex: 1;
-    max-height: calc(100% - 3.5rem);
+    max-height: calc(100% - 1.5rem);
     position: relative; }
   .chat-module .chat-module-body {
     width: 100%;

@@ -4,8 +4,6 @@ package org.masis.community.messageboard.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.masis.community.member.controller.MemberController;
 import org.masis.community.member.domain.MemberDTO;
 import org.masis.community.messageboard.domain.MessageBoardDTO;
 import org.masis.community.messageboard.service.MessageBoardService;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MessageBoardController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MessageBoardController.class);
+	
 	@Inject
 	MessageBoardService messageboardService; 
 	
