@@ -89,7 +89,7 @@ public class MessageBoardController {
 		 
 		List list= new ArrayList();
 		list=messageboardService.commentsread(request.getRequestURI());
-		logger.info(list.size()+"*******************************사이즈");
+		logger.info(list.size()+"*******************************사이즈1");
 		return  list ;//댓글Read
 	}
 	
