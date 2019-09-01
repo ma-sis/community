@@ -19,6 +19,28 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gothic+A1" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/assets/css/theme.css" rel="stylesheet" type="text/css" media="all" />
+    <style type="text/css">
+.popupunder{
+    width: 300px;
+	position:fixed;
+	top: 10px;
+	right: 10px;
+	z-index: 10;
+	border: 0;
+	padding: 20px;
+}
+.popupunder.alert-success{
+    border: 1px solid #198b49;
+	background:#27AE60;
+	color:#fff;
+}
+.popupunder .close{
+	font-size: 10px;
+	position:absolute !important;
+	right: 2px;
+	top: 3px;
+}
+    </style>
 </head>
 <body>
 <div class="layout layout-nav-side">
@@ -28,12 +50,18 @@
 <%-- Nav End --%>
 
 
-
       <div class="main-container">
 
         <div class="content-container row">
-		<!-- Start:왼쪽레이아웃-->   
-	
+		<!-- Start:왼쪽레이아웃    -->
+		<!-- Start:알림창 -->
+		<div class="popupunder alert alert-success fade in">
+		<button type="button" class="close close-sm" data-dismiss="alert">
+		<i class="glyphicon glyphicon-remove"></i>
+		</button>
+		<strong>${msg}</strong>
+		</div>
+		<!-- End:알림창 -->	
           <div class="chat-module col-9" data-filter-list="chat-module-body">
             <div class="chat-module-top">
               <form>
@@ -62,7 +90,7 @@
                   <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/profile/default.jpg" class="avatar" />
                   <div class="media-body">
                     <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">${list.board_username}</span>
+                      <span class="chat-item-author" data-filter-by="text">${list.board_username} </span>
                      
                       <span data-filter-by="text">
                       <c:choose>
@@ -110,7 +138,7 @@
               <form class="chat-form" action="${pageContext.request.contextPath}/board/messageboard/create">
               <div class="row">
                 <textarea class="form-control col-11" placeholder="새글을 입력해주세요." rows="1" name="board_content"></textarea>
-                <input type="hidden" name="board_useremail" value="min@commu.com">
+                <input type="hidden" name="board_useremail">
                 <input type="submit" class="col-1 btn btn-outline-primary" value="등록">
                 </div>
               </form>
@@ -165,5 +193,18 @@
 	<!--  messageBoard js -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/js/board/message_board/messageBoard.js"></script>
     
+<!--     잠시 -->
+    <script type="text/javascript">
+    if(${msg !=null}){
+        $('.popovers').popover();
+        window.setTimeout(function() {
+        $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+        $(this).remove(); 
+        });
+        // 500 : Time will remain on the screen
+        }, 500);
+        }
+    </script>
+<!--     잠시 -->
 </body>
 </html>

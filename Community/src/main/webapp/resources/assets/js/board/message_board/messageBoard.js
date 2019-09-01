@@ -4,4 +4,6 @@
 
 $(function(){
 	location.href="#top";
+	
+	
 })
