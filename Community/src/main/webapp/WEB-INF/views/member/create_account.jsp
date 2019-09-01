@@ -28,22 +28,37 @@
               <hr>
               <form>
                 <div class="form-group row">
-                  <input class="form-control col-8 ml-2" type="email" placeholder="Email Address" name="email" autocomplete="email" required="required"/>
-                  <button class="btn btn-block btn-primary col-3 mx-2">메일 인증</button>
+                  <input class="form-control col-lg-8 ml-2" type="email" placeholder="Email Address" id="email" name="email" autocomplete="email" required="required"/>
+                  <button class="btn btn-block btn-primary col-lg-3 mx-2" type="button">메일 인증</button>
+                  <div class="text-left ml-2" id="emailErr">
+                    <small class="text-danger"></small>
+                  </div>
+                </div>
+                <div class="form-group row" id="auth">
+                  <input class="form-control col-lg-8 ml-2" type="text" placeholder="인증 번호" id="emailAuthNum"/>
+                  <button class="btn btn-block btn-info col-lg-3 mx-2" type="button">인증 확인</button>
+                  <div class="text-left ml-2" id="authErr">
+                    <small class="text-danger">인증번호가 다릅니다. 다시 시도해주세요.</small>
+                  </div>
                 </div>
                 <div class="form-group row">
-                  <input class="form-control col-8 ml-2" type="text" placeholder="인증 번호" name="check" required="required"/>
-                  <button class="btn btn-block btn-info col-3 mx-2">인증 확인</button>
-                </div>
-                <div class="form-group row">
-                  <input class="form-control col-8 ml-2" type="text" placeholder="User Name" name="name" autocomplete="name"/>
-                  <button class="btn btn-block btn-primary col-3 mx-2">중복 확인</button>
+                  <input class="form-control col-lg-8 ml-2" type="text" placeholder="User Name" id="name" name="name" autocomplete="name" maxlength="10"/>
+                  <button class="btn btn-block btn-primary col-lg-3 mx-2" type="button">중복 확인</button>
+                  <div class="text-left" id="nameErr">
+                    <small class="text-danger"></small>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <input class="form-control mb-1" type="password" placeholder="Password" name="pwd" autocomplete="new-password"/>
-                  <input class="form-control" type="password" placeholder="Password Check" name="pwd-check" autocomplete="new-password"/>
-                  <div class="text-left">
-                    <small>Your password should be at least 8 characters</small>
+                  <input class="form-control" type="text" placeholder="Phone Number" id="phone" name="phone" autocomplete="tel"/>
+                  <div class="text-left" id="phoneErr">
+                    <small class="text-danger"></small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input class="form-control mb-1" type="password" placeholder="Password" id="pwd" name="pwd" autocomplete="new-password"/>
+                  <input class="form-control" type="password" placeholder="Password Check" id="pwd2" autocomplete="new-password"/>
+                  <div class="text-left" id="pwdErr">
+                    <small class="text-danger">Your password should be at least 8 characters</small>
                   </div>
                 </div>
                 <button class="btn btn-lg btn-block btn-primary" role="button" type="submit">
@@ -81,6 +96,197 @@
 
     <!-- Required theme scripts (Do not remove) -->
     <script type="text/javascript" src="${context}/resources/assets/js/theme.js"></script>
+	
+	<!-- Page js -->
+<%-- 	<script type="text/javascript" src="${context}/resources/assets/js/member/join.js"></script> --%>
+<script type="text/javascript">
+function showMsg(tag,msg) {
+	$(tag+" small").text(msg);
+	$(tag).show()
+}
 
+$(function(){
+	//이메일 인증 숨김
+	$("#auth").hide();
+	$("#authErr").hide();
+	$("#emailErr").hide();
+	$("#pwdErr").hide();
+	$("#nameErr").hide();
+	
+	//이메일 인증번호
+	var authNum;
+	//이메일 중복 체크 (ajax 구현하기)
+	$("#email + button").click(function(){
+		$("#emailErr small").removeClass("text-success").addClass("text-danger");
+		var email = $("#email").val();
+		if(email ==''){
+			showMsg("#emailErr","필수입력 사항입니다.");
+		}else{
+			var reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			if(!reg.test(email)){
+				showMsg("#emailErr","이메일 형식이 맞지 않습니다.");
+			}else{
+				$.ajax({
+					type: "post",
+					url: "${context}/member/emailCheck.do",
+					data: {email: email},
+					dataType: 'text',
+					success: function(data){
+						if(data != 1){ //이메일 존재하지 않음
+							$("#auth").show();
+							$("#emailErr small").removeClass("text-danger").addClass("text-success");
+							showMsg("#emailErr",'메일 주소로 인증 번호가 발송 되었습니다.');
+							authNum = data;
+							$("#email").attr("readonly","readonly");
+// 							alert(authNum);
+						}else{
+							showMsg("#emailErr",'존재하는 이메일 입니다.');
+						}
+					},
+					error: function(jqXHR, exception){
+						alert("서버 내부 에러가 발생했습니다.");
+						console.log(jqXHR.responseText);
+					}
+				});
+			}
+		}
+	});//end of email check
+	
+	$("#emailAuthNum + button").click(function() {
+		if(authNum != $("#emailAuthNum").val()){
+			$("authErr").show();
+		}else{
+			showMsg("#emailErr","인증 성공");
+			$("#auth").hide();
+			$("#emailAuthNum").attr("disabled",true);	
+		}
+	});//end of emailauth check
+	
+	//이름 확인
+	$("#name + button").click(function(){
+		var name = $("#name").val().trim( );
+		if(name ==''){
+			showMsg("#nameErr","필수 입력 사항입니다.");
+		}else if(name.length < 3){
+			showMsg("#nameErr","3자리 이상 작성해 주세요.");
+		}else{
+			$.ajax({
+				type: "post",
+				url: "${context}/member/nameCheck.do",
+				data: {name: name},
+				dataType: 'text',
+				success: function(data){
+					if(data == 0){ //닉네임 사용가능
+						var namecon = confirm(name+"을/를 이름으로 사용하시겠습니까?");
+						if(namecon){
+							$("#name").attr("readonly","readonly");
+							$("#nameErr small").removeClass("text-danger").addClass("text-success");
+							showMsg("#nameErr","중복체크 완료");
+						}
+					}else{
+						showMsg("#nameErr",'중복된 이름입니다.');
+					}
+				},
+				error: function(jqXHR, exception){
+					alert("서버 내부 에러가 발생했습니다.");
+					console.log(jqXHR.responseText);
+				}
+			});
+		}
+	});//end of name check
+	
+	//비밀번호 체크
+	$("#pwd").blur(function(){
+		var pwd = $(this).val();
+		if(pwd ==''){
+			showMsg("#pwdErr","필수 입력 사항입니다.");
+		}else{
+			var reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}/;
+			if(!reg.test(pwd)){
+				showMsg("#pwdErr","비밀번호 형식이 맞지 않습니다.");
+			}else{		
+				if($("#pwd2").val() != pwd){
+					showMsg("#pwdErr","비밀번호 확인이 맞지 않습니다.");
+				}else{showMsg("#pwdErr",'');}
+			}
+		}
+	});//end of pwd check
+	
+	//비밀번호 확인
+	$("#pwd2").blur(function(){
+		var pwd2 = $("#pwd2").val();
+		if(pwd2 ==''){
+			showMsg("#pwdErr","필수 입력 사항입니다.");
+		}else{
+			if($("#pwd").val() != pwd2){
+				showMsg("#pwdErr","비밀번호 확인이 맞지 않습니다.");
+			}else{  $("#pwdErr").hide(); }
+		}
+	});//end of pwd re-check
+	
+	//휴대폰 확인
+	$("#phone").blur(function(){
+		var phone = $(this).val();
+		if(phone ==''){
+			showMsg("#phoneErr","필수 입력 사항입니다.");
+		}else{ 
+			var reg = /^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$/;
+			if(!reg.test(phone)){
+				showMsg("#phoneErr","양식에 맞는 휴대폰 번호를 입력하세요");
+			}else{ $("#phoneErr").hide(); }
+		}
+	});//end of phone check
+
+});
+	
+function register(){
+	var result = 1;
+	var email = $("#email");
+	var pwd = $("#pwd");
+	var pwd2 = $("#pwd2");
+	var name = $("#name");
+	var phone = $("#phone");
+	var postCode = $("#postCode");
+	var detailAddr = $("#detailAddr");
+	
+	if (email.val() == '') {
+		$("#emailErr").text("필수 입력 사항입니다.");
+		result = 0;
+	}
+	if (pwd.val() == '') {
+		$("#pwdErr").text("필수 입력 사항입니다.");
+		result = 0;
+	} 
+	if (pwd2.val() == '') {
+		$("#pwd2Err").text("필수 입력 사항입니다.");
+		result = 0;
+	}
+	if(name.val()==''){
+		$("#nameErr").text("필수 입력 사항입니다.");
+		result = 0;
+	}
+	if(phone.val()==''){
+		$("#phoneErr").text("필수 입력 사항입니다.");
+		result = 0;
+	}
+	if(postCode.val()==''||detailAddr.val()==''){
+		$("#addrErr").text("필수 입력 사항입니다.");
+		result = 0;
+	}
+	else{
+		$("#addrErr").text('');
+	}
+	if(result==0){
+		alert("필수 사항을 기입해주세요.");
+		return false;
+	}
+	if($("#emailErr").text()!=''||$("#pwdErr").text()!=''||$("#pwd2Err").text()!=''
+			||$("#nameErr").text()!=''||$("#phoneErr").text()!=''
+			||$("#addrErr").text()!=''||$("#emailErr").text()!=''){
+		alert("오류 사항을 확인 후 다시 입력해주세요.");
+		return false;
+	} 
+}
+</script>
   </body>
 </html>
