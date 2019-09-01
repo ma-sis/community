@@ -21,4 +21,11 @@
 		where email= #{email};
 	    ]]>
 	</select>
+	
+	<select id="countName" resultType="String" parameterType="String">
+		<![CDATA[
+		select count(*) from member
+		where name= #{name};
+	    ]]>
+	</select>
 </mapper>

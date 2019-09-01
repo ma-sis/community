@@ -32,4 +32,9 @@ public class MemberServiceImpl implements MemberService {
 	public int countEmail(String email) throws Exception {
 		return dao.countEmail(email);
 	}
+	
+	@Override
+	public String countName(String name) throws Exception {
+		return dao.countName(name);
+	}
 }

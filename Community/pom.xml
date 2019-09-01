@@ -132,12 +132,12 @@
 			<scope>test</scope>
 		</dependency>
 
-<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>5.1.38</version>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.38</version>
+		</dependency>
 
       	    
 		<!-- apach dbcp2 -->   
@@ -179,6 +179,22 @@
 		    <version>1.16</version>
 		</dependency>
 		    
+		<!-- e-mail 발송을 위한 dependency -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.5.6</version>
+		</dependency>
+		
+
 	</dependencies>
     <build>
         <plugins>

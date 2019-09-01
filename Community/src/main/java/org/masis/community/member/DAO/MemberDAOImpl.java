@@ -30,4 +30,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public int countEmail(String email) throws Exception {
 		return sqlSession.selectOne(Namespace+"countEmail",email);
 	}
+	
+	@Override
+	public String countName(String name) throws Exception {
+		return sqlSession.selectOne(Namespace+"countName",name);
+	}
 }
