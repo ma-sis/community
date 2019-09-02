@@ -35,4 +35,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public String countName(String name) throws Exception {
 		return sqlSession.selectOne(Namespace+"countName",name);
 	}
+	
+	@Override
+	public int insertMember(MemberDTO mdto) throws Exception {
+		return sqlSession.insert(Namespace+"insertMember", mdto);
+	}
 }
