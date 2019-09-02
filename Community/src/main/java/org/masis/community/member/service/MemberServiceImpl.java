@@ -37,4 +37,9 @@ public class MemberServiceImpl implements MemberService {
 	public String countName(String name) throws Exception {
 		return dao.countName(name);
 	}
+	
+	@Override
+	public int insertMember(MemberDTO mdto) throws Exception {
+		return dao.insertMember(mdto);
+	}
 }

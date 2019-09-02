@@ -9,4 +9,5 @@ public interface MemberService {
 	public MemberDTO selectlogin(MemberDTO mdto) throws Exception;
 	public int countEmail(String email) throws Exception;
 	public String countName(String name) throws Exception;
+	public int insertMember(MemberDTO mdto) throws Exception;
 }
