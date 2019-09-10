@@ -67,7 +67,29 @@ public class MessageBoardImpl implements MessageBoardDAO {
 	//06.자유게시판 댓글 전체목록
 	@Override
 	public List<MessageboradCommentsDTO> commentsread(int board_num) {
-		// TODO Auto-generated method stub
-		return sqlsession.selectList(Namespace+"commentsread");
+		return sqlsession.selectList(Namespace+"commentsread",board_num);
 	}
+	
+	//07.자유게시판 댓글작성
+	@Override
+	public void createcomment(MessageboradCommentsDTO dto) {
+		 sqlsession.insert(Namespace+"createcomment",dto);
+		
+	}
+	
+	//08.댓글 삭제
+	@Override
+	public void deletecomment(int comment_num) {
+		sqlsession.delete(Namespace+"deletecomment",comment_num);
+		
+	}
+	
+	//09.댓글수정
+	@Override
+	public void updatecomment(MessageboradCommentsDTO dto) {
+		
+		sqlsession.update(Namespace+"updatecomment",dto);
+		
+	}
+	
 }

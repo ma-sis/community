@@ -1,6 +1,9 @@
 package org.masis.community.messageboard.service;
 
 import java.util.List;
+
+import javax.sound.midi.MidiDevice.Info;
+
 import org.masis.community.member.controller.MemberController;
 import org.masis.community.messageboard.DAO.MessageBoardDAO;
 import org.masis.community.messageboard.domain.MessageBoardDTO;
@@ -35,8 +38,6 @@ public class MessageBoardServiceImpl implements MessageBoardService {
 	public void create(MessageBoardDTO dto ,String board_useremail,String board_username) {
 		
 		
-		String content=dto.getBoard_content();//줄바꿈 문자처리
-		dto.setBoard_content(content.replace("\n","<br>"));
 		dto.setBoard_useremail(board_useremail);
 		dto.setBoard_username(board_username);
 		dao.create(dto);
@@ -64,9 +65,6 @@ public class MessageBoardServiceImpl implements MessageBoardService {
 	@Override
 	public void update(MessageBoardDTO dto) {
 		
-		
-		String content=dto.getBoard_content(); //줄바꿈 문자처리
-		dto.setBoard_content(content.replace("\n","<br>"));
 		dao.update(dto);
 		
 	}
@@ -78,6 +76,30 @@ public class MessageBoardServiceImpl implements MessageBoardService {
 		path=path.split("/")[5]; //요청주소에서 게시판번호만 가져오기
 		
 		return dao.commentsread(Integer.parseInt(path));
+	}
+	
+	//07.자유게시판 댓글작성
+	@Override
+	public void createcomment(MessageboradCommentsDTO dto) {
+		
+		dao.createcomment(dto); 
+	}
+	
+	//08.댓글 삭제
+	@Override
+	public void deletecomment(String path) {
+		
+		path=path.split("/")[5]; //요청주소에서 게시판번호만 가져오기
+		dao.deletecomment(Integer.parseInt(path));
+		
+	}
+	
+	//09.댓글수정
+	@Override
+	public void updatecomment(MessageboradCommentsDTO dto) {
+		
+		dao.updatecomment(dto);
+		
 	}
 	
 

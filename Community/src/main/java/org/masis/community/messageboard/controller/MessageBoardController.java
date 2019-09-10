@@ -1,9 +1,7 @@
 package org.masis.community.messageboard.controller;
 
 
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.masis.community.member.domain.MemberDTO;
@@ -87,10 +85,8 @@ public class MessageBoardController {
 	@ResponseBody
 	public List<MessageboradCommentsDTO> readcomment(Model model,HttpServletRequest request ,RedirectAttributes rttr) throws Exception{
 		 
-		List list= new ArrayList();
-		list=messageboardService.commentsread(request.getRequestURI());
-		logger.info(list.size()+"*******************************사이즈1");
-		return  list ;//댓글Read
+		return messageboardService.commentsread(request.getRequestURI());//댓글Read
+		
 	}
 	
 	//댓글작성
@@ -98,7 +94,27 @@ public class MessageBoardController {
 	@ResponseBody
 	public void createcomment(@ModelAttribute MessageboradCommentsDTO dto) throws Exception{
 	
+		messageboardService.createcomment(dto);
+		
 	}
+	
+	//댓글삭제
+	@RequestMapping(value = "deletecomment/*")
+	@ResponseBody
+	public void deletecomment(HttpServletRequest request) throws Exception{
+		messageboardService.deletecomment(request.getRequestURI());
+		
+	}
+	
+	//댓글수정
+	@RequestMapping(value = "updatecomment")
+	@ResponseBody
+	public void updatecomment(@ModelAttribute MessageboradCommentsDTO dto) throws Exception{
+		
+		messageboardService.updatecomment(dto);
+		
+	}
+	
 	
 
 }
