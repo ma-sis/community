@@ -2,25 +2,68 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="org.masis.community.mybatis.messageboardmapper">
    
-	<!--01.게시물 전체목록 select-->
+	<!--01.게시물 전체목록 -->
     <select id="listall" resultType="org.masis.community.messageboard.domain.MessageBoardDTO">
      <![CDATA[
      	select * from messageboard  order by board_num desc
 	    ]]>
     </select>
     
-	<!-- 02.게시물 insert-->
+	<!-- 02.게시물  create-->
     <insert id="create" >
 	    <![CDATA[
-	      insert into messageboard (board_useremail , board_regdate , board_content,board_username ) values(#{board_useremail},sysdate(),#{board_content},#{board_username})
+	      insert into messageboard (board_useremail ,board_regdate , board_content,board_username ) values(#{board_useremail},sysdate(),#{board_content},#{board_username})
 	    ]]>
     </insert> 
     
-   <!--03.게시물 상세읽기 select-->
+   <!--03.게시물 상세읽기 -->
     <select id="read" resultType="org.masis.community.messageboard.domain.MessageBoardDTO">
      <![CDATA[
      	select * from messageboard where board_num = #{board_num}
 	    ]]>
-    </select>   
+    </select> 
+    
+     <!--04.게시물 삭제 -->
+    <delete id="delete">
+     <![CDATA[
+     	delete  from messageboard where board_num = #{board_num}
+	    ]]>    
+    </delete>  
+    
+     <!--05.게시물 수정 -->
+    <update id="update">
+       <![CDATA[
+    	update messageboard set board_content = #{board_content} ,board_regdate = sysdate()   where board_num = #{board_num}
+    	   ]]> 
+    </update>
+    
+    <!--06.자유게시판 댓글 전체목록 -->
+    <select id="commentsread" resultType="org.masis.community.messageboard.domain.MessageboradCommentsDTO">
+     <![CDATA[
+     	select * from messageborad_comments where board_num= #{board_num}
+	    ]]>
+    </select>
+    
+    <!--07.자유게시판 댓글작성 -->
+     <insert id="createcomment"  >
+	    <![CDATA[
+	      insert into messageborad_comments (board_num ,comment_useremail , comment_regdate,comment_username , comment_contents )
+	       values(#{board_num},#{comment_useremail},sysdate(),#{comment_username},#{comment_contents})
+	    ]]>
+    </insert>    
+    
+     <!--08.댓글 삭제 -->
+    <delete id="deletecomment">
+     <![CDATA[
+     	delete  from messageborad_comments where comment_num = #{comment_num}
+	    ]]>    
+    </delete>  
+    
+     <!--09.댓글 수정 -->
+    <update id="updatecomment">
+       <![CDATA[
+    	update messageborad_comments set comment_contents = #{comment_contents} ,comment_regdate = sysdate()   where comment_num = #{comment_num}
+    	   ]]> 
+    </update>
     
 </mapper>

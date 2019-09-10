@@ -2,6 +2,7 @@ package org.masis.community.messageboard.domain;
 
 import java.util.Date;
 
+//자유게시판
 public class MessageBoardDTO {
 	
 	private int board_num; //게시물번호

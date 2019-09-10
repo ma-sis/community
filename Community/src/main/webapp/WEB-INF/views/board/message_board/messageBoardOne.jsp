@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,15 +35,38 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+  
+  
+ .popupunder{
+    width: 300px;
+	position:fixed;
+	top: 10px;
+	right: 10px;
+	z-index: 10;
+	border: 0;
+	padding: 20px;
+}
+.popupunder.alert-success{
+    border: 1px solid #198b49;
+	background:#27AE60;
+	color:#fff;
+}
+.popupunder .close{
+	font-size: 10px;
+	position:absolute !important;
+	right: 2px;
+	top: 3px;
+} 
+
 }
 </style>
 </head>
 <body>
 <div class="layout layout-nav-side">
 
-<%-- Nav Start --%>
+			<%-- Nav Start --%>
 			<jsp:include page="../../include/nav.jsp"></jsp:include>
-<%-- Nav End --%>
+			<%-- Nav End --%>
 
 
 
@@ -55,123 +80,103 @@
 		 </div>
 		 <div class="border">
 							
-                <div class="media chat-item " >
+                <div class="media chat-item" style="cursor: default;" >
                   <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/profile/default.jpg" class="avatar mt-1" />
                   <div class="media-body ml-0">
                     <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">${messageboardone.board_username}</span>
-                     
+                      <span class="chat-item-author" data-filter-by="text">익명</span>
                       <span data-filter-by="text">
-방금전
+                      <fmt:formatDate value="${messageboardone.board_regdate}" pattern="yyyy-MM-dd HH:mm" var="regdate"/> 
+					${regdate}
 					</span>
                     
                     </div>
-                    <div class="chat-item-body" data-filter-by="text">
-                      <a class="pb-0 mb-0 text-secondary" href="${pageContext.request.contextPath}/board/messageboard/read/${messageboardone.board_num}">${messageboardone.board_content}</a>
+                      <%
+      					pageContext.setAttribute("crcn", "\r\n"); //Space, Enter
+    					pageContext.setAttribute("br", "<br/>"); //br 태그
+					%> 
+                    <c:set var="conresult" value="${fn:replace(messageboardone.board_content, crcn, br)}" />
+                    <div class="chat-item-body contentview" data-filter-by="text" id="conr" >${conresult}</div>
+                    <div class="chat-item-body contentview" data-filter-by="text" id="conr2" style="display: none;" >${messageboardone.board_content}</div>
+                    
+					<!--Start:수정버튼클릭시  show -->
+                    <div class="chat-item-body" data-filter-by="text" id="updatetview">
+                    <form id="upform" action="${pageContext.request.contextPath}/board/messageboard/update">
+ 					<textarea class="form-control"  rows="3" name="board_content" id="ftext"></textarea>
+ 					<input type="hidden" value="${messageboardone.board_num}" name="board_num">
+ 					 </form>
+ 					 <button class="float-right btn btn-sm btn-outline-primary mt-1 ml-1" id="freset" >취소</button>
+ 					 <button class="float-right btn btn-sm btn-outline-primary mt-1" id="fupbtn" >수정</button>
                     </div>
-                     <div class="chat-item-title">
+                    <!--End:수정버튼클릭시  show -->
+                    
+                     <div class="chat-item-title contentview">
                       <span class="chat-item-author" data-filter-by="text"></span>
                       <span data-filter-by="text " class="text-muted">
                     	<b class="text-primary"><i class="material-icons" style="font-size:15px;">favorite_border</i></b>${messageboardone.board_like}
                     	<i class="material-icons" style="font-size:15px;">bookmark_border</i>
                       </span>
                     </div>
+                      <c:if test="${sessionScope.mdto.email == messageboardone.board_useremail}">
+                      <div class="chat-item-title contentview">
+                      <span class="chat-item-author" data-filter-by="text"></span>
+                      <span data-filter-by="text " class="text-muted">
+                    	 <a id="upbtn" style="cursor: pointer;">[수정]</a>
+                    	 <a id="delbtn" style="cursor: pointer;">[삭제]</a>
+                      </span>
+                    </div>                   
+                    </c:if>
+                    
                   </div>
                 </div>
-		
 		 </div>
 		 
+		<!--Start:댓글목록부분 -->
 		 <div style="overflow: auto;  height: 500px;" class="border bg-light" >
 	
+			<div id="top"></div>
+			<div id="commentdiv"></div>
 	
-	
-<!-- 	잠시 -->
-<div id="top"></div>
-
-                <div class="media chat-item border" >
-                  <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/profile/default.jpg" class="avatar mt-1" />
-                  <div class="media-body ml-0 bg-light">
-                    <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">${messageboardone.board_username}</span>
-                     
-                      <span data-filter-by="text">
-방금전
-					</span>
-                    
-                    </div>
-                    <div class="chat-item-body" data-filter-by="text">
-                      <a class="pb-0 mb-0 text-secondary" href="${pageContext.request.contextPath}/board/messageboard/read/${messageboardone.board_num}">${messageboardone.board_content}</a>
-                    </div>
- 
-                  </div>
-                </div>
-                                <div class="media chat-item border" >
-    <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/profile/default.jpg" class="avatar mt-1" />                  <div class="media-body ml-0 bg-light">
-                    <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">${messageboardone.board_username}</span>
-                     
-                      <span data-filter-by="text">
-방금전
-					</span>
-                    
-                    </div>
-                    <div class="chat-item-body" data-filter-by="text">
-                      <a class="pb-0 mb-0 text-secondary" href="${pageContext.request.contextPath}/board/messageboard/read/${messageboardone.board_num}">${messageboardone.board_content}</a>
-                    </div>
- 
-                  </div>
-                </div>
-                                <div class="media chat-item border" >
-                  <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/profile/default.jpg" class="avatar" />
-                  <div class="media-body ml-0 bg-light">
-                    <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">${messageboardone.board_username}</span>
-                     
-                      <span data-filter-by="text">
-방금전
-					</span>
-                    
-                    </div>
-                    <div class="chat-item-body" data-filter-by="text">
-                      <a class="pb-0 mb-0 text-secondary" href="${pageContext.request.contextPath}/board/messageboard/read/${messageboardone.board_num}">${messageboardone.board_content}</a>
-                    </div>
- 
-                  </div>
-                </div>
-                                <div class="media chat-item border" >
-                  <img alt="Image" src="${pageContext.request.contextPath}/resources/assets/img/profile/default.jpg" class="avatar" />
-                  <div class="media-body ml-0 bg-light">
-                    <div class="chat-item-title">
-                      <span class="chat-item-author" data-filter-by="text">${messageboardone.board_username}</span>
-                     
-                      <span data-filter-by="text">
-방금전
-					</span>
-                    
-                    </div>
-                    <div class="chat-item-body" data-filter-by="text">
-                      <a class="pb-0 mb-0 text-secondary" href="${pageContext.request.contextPath}/board/messageboard/read/${messageboardone.board_num}">${messageboardone.board_content}</a>
-                    </div>
- 
-                  </div>
-                </div>
-	
-<!-- 	잠시 -->
 		 </div>
+		<!--End:댓글목록부분 -->		 
 		 <div class="border ">
-		 <form>
-		 <div class="row">
-		 <input type="text" class="form-control col-11"  placeholder="댓글을 입력하세요." >
-		 <button type="submit" class="btn btn-outline-primary col-1">등록</button>
-		</div>
+		 <form id="frm" method="post">
+		 <div class="row" id="commentform">
+		 <input type="text" class="form-control col-11 "  placeholder="댓글을 입력하세요." name="comment_contents" id="comment_contents">
+		 <input type="hidden" name="board_num" value="${messageboardone.board_num}">
+		 <input type="hidden" name="comment_useremail" value="${sessionScope.mdto.email}">
+		 <input type="hidden" name="comment_username" value="${sessionScope.mdto.name}">
+		 <button  class="btn btn-outline-primary col-1" id="regbtn">등록</button>
+		 </div>
 		 </form>
+		 
+		<!--Start:댓글수정부분 -->
+		<form id="frm2" method="post">
+		 <div class="row" id="upcomment">
+		  <input type="hidden" name="comment_num" value="" id="comment_num">
+		  <input type="text" class="form-control col-10 commentform" name="comment_contents" id="comment_contentsu">
+		  <button  class="btn btn-outline-primary col-1 commentform" id="frm2upbtn">수정</button>
+		  <button  class="btn btn-outline-primary col-1 commentform" id="frm2rebtn">취소</button>
+		</div>
+		</form>
+		<!--End:댓글수정부분 -->
 		 </div>
 				
           </div>
 		<!-- End:왼쪽레이아웃-->
 
+
 		<!--Start:오른쪽레이아웃 -->
           <div class="sidebar collapse col-lg-3" id="sidebar-collapse">
+               	<!-- Start:알림창 -->
+		<div class="popupunder alert alert-success fade in">
+		<button type="button" class="close close-sm" data-dismiss="alert">
+		<i class="glyphicon glyphicon-remove"></i>
+		</button>
+		<strong>${msg}</strong>
+		</div>
+		<!-- End:알림창 -->	
+          
             <div class="sidebar-content">
               <div class="chat-team-sidebar text-small">
                 <div class="chat-team-sidebar-top">
@@ -216,6 +221,190 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/js/theme.js"></script>
 	<!--  messageBoard js -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/assets/js/board/message_board/messageBoard.js"></script>
+
+	<script type="text/javascript">
+
+	function getcomments(){ //전체 댓글 list 
     
+    $.getJSON("${pageContext.request.contextPath}/board/messageboard/readcomments/${messageboardone.board_num}",function(data){
+       
+       var str="";
+       
+         $(data).each(function(){
+        	 var loginemail="${sessionScope.mdto.email}";
+        	 
+        	 var regdate= new Date(this.comment_regdate);
+        	 str+= "<div class='media chat-item border mb-0 pb-0 mt-0 pt-0 bg-light'>"+
+           "<img alt='Image' src='${pageContext.request.contextPath}/resources/assets/img/profile/default.jpg' class='avatar mt-1' />"+
+            "<div class='media-body ml-0 bg-light'>"+
+              "<div class='chat-item-title'><span class='chat-item-author' data-filter-by='text'>"+
+              	"익명"+"</span>"+
+              "<span data-filter-by='text'>"+
+              (regdate.getMonth() + 1)+"/"+regdate.getDate()+" "+ regdate.getHours()+":"+regdate.getMinutes()+"</span></div>"+
+              "<div class='chat-item-body' data-filter-by='text'>"+this.comment_contents;
+              if(this.comment_useremail == loginemail){
+            	  var convar=String(this.comment_contents);
+            	  var comment_num=this.comment_num;
+ 				str+="<span class='float-right' style='cursor: pointer;'><a id='comupbtn' onclick='fnupcom("+comment_num+",\""+convar+"\");'>[수정]</a><a id='comdelbtn' onclick='fndelcom("+this.comment_num+");'>[삭제]</a></span>";
+ 				
+ 				
+         }
+        	 
+        	str+="</div></div></div>";
+         }
+            );
+         $("#commentdiv").html(str);
+          });   
+          
+    }  
+
+
+	if(${msg !=null}){ //메시지창
+	    $('.popovers').popover();
+	    window.setTimeout(function() {
+	    $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+	    $(this).remove(); 
+	    });
+	    }, 500);
+	    }
+
+$(function(){
+	
+		getcomments(); //전체 댓글 목록불러오기
+		$("#updatetview").hide(); //수정하는 부분 숨김
+		$("#upcomment").hide();//댓글수정하는 부분 숨김
+		$("#upbtn").on("click",function(){//수정버튼선택시
+	
+		$(".contentview").hide(); //게시물목록 숨김	
+		$("#updatetview").show(); //수정하는 부분 보여줌
+		
+		 $("#ftext").val($("#conr2").text());
+		 $("#ftext").focus();
+		
+		});
+		
+	
+	$("#delbtn").on("click",function(){ //삭제버튼선택시 
+		
+	       if(confirm("삭제하시겠습니까?") == true){
+	    	   location.href="${pageContext.request.contextPath}/board/messageboard/delete/${messageboardone.board_num}";
+	        }
+	        else{
+	            return ;
+	        }
+	});
+	
+	$("#fupbtn").on("click",function(){ //수정완료버튼선택시 
+		
+	       if(confirm("수정하시겠습니까?") == true){
+	    	   $("#upform").submit();
+	        }
+	        else{
+	            return ;
+	        }
+	});
+	
+	$("#freset").on("click",function(){ //수정버튼취소클릭시
+		
+		
+	       if(confirm("취소하시했습니까?") == true){
+	    	   $("#updatetview").hide();
+	    	   $(".contentview").show();
+	    	   $("#ftext").val("$(conresult2)");
+	        }
+	        else{
+	            return ;
+	        }
+		
+		
+	});
+	
+	   $("#regbtn").on("click", function(){ //댓글작성
+		   
+		   if($("#comment_contents").val()==null || $("#comment_contents").val()==""){
+	    		alert("내용을 입력해주세요");
+	    		$("#comment_contents").focus();
+	    	}else{
+		   
+	        $.ajax({
+	            url: "${pageContext.request.contextPath}/board/messageboard/createcomment",
+	            type: "POST",
+	            data: $("#frm").serialize(),
+	            success: function(data){
+	            	
+	            	getcomments();
+	            
+	            },
+	            error: function(){
+	                alert("serialize err");
+	            }
+	        });
+	    	}
+	    });
+	   
+	   $("#frm2rebtn").on("click",function(){ //댓글수정시 취소버튼눌렀을경우
+		   
+	   		$("#commentform").show();		
+			$("#upcomment").hide();
+	   });
+	   
+	   $("#frm2upbtn").on("click",function(){//댓글수정시 수정버튼눌렀을경우
+		   
+		   
+	        $.ajax({
+	            url: "${pageContext.request.contextPath}/board/messageboard/updatecomment",
+	            type: "POST",
+	            data: $("#frm2").serialize(),
+	            success: function(data){
+	            	
+	            	getcomments();
+	            
+	            },
+	            error: function(){
+	                alert("serialize err");
+	            }
+	        });
+		   
+	   });
+	
+	
+	
+});
+
+	function fndelcom(comment_num){ //댓글삭제클릭시
+	
+	       if(confirm("댓글을 삭제하시겠습니까?") == true){
+	    	  
+		        $.ajax({
+		            url: "${pageContext.request.contextPath}/board/messageboard/deletecomment/"+comment_num,
+		            type: "POST",
+		            success: function(data){
+		            	
+		            	getcomments();
+		            
+		            },
+		            error: function(){
+		                alert("댓글삭제 오류");
+		            }
+		        });
+	    	  
+	        }
+	        else{
+	            return ;
+	        }
+	}
+
+	function fnupcom(comment_num,comment_contents){ //댓글수정클릭시
+		
+		$("#commentform").hide();		
+		$("#upcomment").show();
+		$("#comment_num").val(comment_num);
+		$("#comment_contentsu").val(comment_contents);
+		$("#comment_contentsu").focus();
+	}
+	
+	
+</script>
+
 </body>
 </html>
